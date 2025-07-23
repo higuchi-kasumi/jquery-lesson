@@ -64,10 +64,10 @@
       $(function(){
         $('.menu__list li').hover(
           function(){
-            $(this).children('.menu__list__childList').stop(true, true).slideDown();
+            $(this).children('.menu__list__childList').stop(true, false).slideDown();
           },
           function(){
-            $(this).children('.menu__list__childList').stop(true, true).slideUp();
+            $(this).children('.menu__list__childList').stop(true, false).slideUp();
           }
         )
       });
