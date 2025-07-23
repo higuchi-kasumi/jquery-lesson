@@ -15,7 +15,79 @@
   </div>
   <script src="../../common/js/jquery.js"></script>
   <script>
-    // 回答はここに書いてね
+    $(function(){
+      $('#wrapper').on('click', '#pokemon_search', encount);
+      $('#wrapper').on('click', '#catch', hunt);
+      $('#wrapper').on('click', '[data-js="reset"]', escape);
+
+      // ポケモンを探す
+      function encount(){
+        const randomNum = Math.floor(Math.random() * 150) + 1;
+
+        $.ajax({
+          url: `https://pokeapi.co/api/v2/pokemon/${randomNum}`,
+          method: 'GET'
+        }).done(function(res) {
+          $.ajax({
+            url: `https://pokeapi.co/api/v2/pokemon-species/${randomNum}/`,
+            method: 'GET'
+          }).done(function(speciesRes) {
+            let encountHtml =
+              `
+                <p class="name">${speciesRes.names[0].name}</p>
+                <div>
+                  <img class="img" src="${res.sprites.front_default}" alt="">
+                </div>
+                <div>
+                  <button class="btn" id="catch">捕まえる</button>
+                  <button class="btn" data-js="reset">逃げる</button>
+                </div>
+              `
+            $('#wrapper').html(encountHtml);
+          }).fail(function(err) {
+            console.log(err);
+          });
+        }).fail(function(err) {
+          console.log(err);
+        });
+      }
+
+      // ポケモンを捕まえる
+      function hunt(){
+        const randomNum = Math.floor(Math.random() * 4) + 1;
+
+        if (Math.random() < 0.5) {
+          $.ajax({
+            url: `https://pokeapi.co/api/v2/item/${randomNum}`,
+            method: 'GET'
+          }).done(function(res) {
+            let doneHtml =
+              `
+                <p class="name">ゲットしました</p>
+                <div>
+                  <img class="img" src="${res.sprites.default}" alt="">
+                </div>
+                <button class="btn" data-js="reset">戻る</button>
+              `
+            $('#wrapper').html(doneHtml);
+          }).fail(function(err) {
+            console.log(err);
+          });
+        } else {
+          let failHtml =
+            `
+              <p class="text">逃げられてしまった...</p>
+              <button class="btn mt" data-js="reset">戻る</button>
+            `
+          $('#wrapper').html(failHtml);
+        }
+      }
+
+      // 逃げる(戻る)
+      function escape(){
+        $('#wrapper').html('<button type="button" class="btn search-btn" id="pokemon_search">ポケモンを探す</button>');
+      }
+    });
   </script>
 </body>
 </html>
