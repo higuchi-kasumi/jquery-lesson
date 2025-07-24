@@ -104,9 +104,9 @@
             const select = $('.select').val();
             $('.list li').each(function(index, element){
               const categoryType = $(element).data('category-type');
-              if(select === 'all' || select === categoryType){
+              if (select === 'all' || select === categoryType) {
                 $(element).show();
-              }else{
+              } else {
                 $(element).hide();
               }
             });
