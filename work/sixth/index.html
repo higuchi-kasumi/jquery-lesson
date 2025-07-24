@@ -54,11 +54,9 @@
 
       // ポケモンを捕まえる
       function hunt(){
-        const randomNum = Math.floor(Math.random() * 4) + 1;
-
         if (Math.floor(Math.random() * 2) === 0) {
           $.ajax({
-            url: `https://pokeapi.co/api/v2/item/${randomNum}`,
+            url: `https://pokeapi.co/api/v2/item/1`,
             method: 'GET'
           }).done(function(res) {
             let doneHtml =
